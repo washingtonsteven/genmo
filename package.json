@@ -1,0 +1,14 @@
+{
+  "name": "genmo",
+  "version": "1.0.0",
+  "description": "generator characters, worlds, stuff!",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Steven Washington",
+  "license": "MIT",
+  "dependencies": {
+    "prompt": "^1.0.0"
+  }
+}

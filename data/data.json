@@ -1,0 +1,35 @@
+{
+  "map":[
+    ["1","1","1","1","1","1","1","1","1","1"],
+    ["1","1","1","1","1","1","1","1","1","1"],
+    ["1","1","1","1","1","1","1","1","1","1"],
+    ["1","1","1","1","1","1","1","1","1","1"],
+    ["1","1","1","1","1","1","1","1","1","1"]
+  ],
+  "map_tiles":{
+    "1":{
+      "type":"city",
+      "description":"A bustling burg with an inadequate transit network",
+      "npcs":[
+        { 
+          "name":"Josh Around",
+          "responses":{
+            "default":"Preparing for the DOG party!"
+          }
+        },
+        {
+          "name":"Rosa Diaz",
+          "responses":{
+            "default":"I'm gonna rip your face off, grandma"
+          }
+        },
+        {
+          "name":"Snake Eyes",
+          "responses":{
+            "default":"I'm actually a really nice guy, guys." 
+          }
+        }
+      ]
+    }
+  }
+}

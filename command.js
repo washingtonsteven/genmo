@@ -1,7 +1,8 @@
 const prompt = require('prompt');
 
 class Command {
-  constructor() {
+  constructor(p = "command") {
+    this.currentPrompt = p;
     this.subscriptions = {};
   }
   addSubscriber(command, fn) {
@@ -21,7 +22,7 @@ class Command {
     this.waitForCommand();
   }
   waitForCommand() {
-    prompt.get(["command"], (err, res) => {
+    prompt.get(this.promptProperties, (err, res) => {
       if (err) { console.error(err); return; }
       const parts = res.command.split(":");
       const cmd = parts[0];
@@ -31,17 +32,31 @@ class Command {
       if (this.subscriptions[cmd]) {
         for (let i = 0; i < this.subscriptions[cmd].length; i++) {
           const fn = this.subscriptions[cmd][i];
-          const result = fn(args);
+          const result = fn(cmd, args);
           if (doContinue !== false)
             doContinue = result;
         }
+      } else {
+        console.log(`I don't understand '${cmd}'`);
       }
 
       if (doContinue !== false) {
         this.waitForCommand();
+      } else {
+        console.log('Goodbye.');
+        process.exit(0);
       }
     });
   }
+  get promptProperties() {
+    return {
+      properties:{
+        command:{
+          description:this.currentPrompt
+        }
+      }
+    }
+  }
 }
 
-module.exports = Command;
+module.exports = new Command();

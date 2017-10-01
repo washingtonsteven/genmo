@@ -1,5 +1,5 @@
 const fs = require('fs');
-const Command = require('./command');
+const command = require('./command');
 
 const Map = require('./model/map');
 const Player = require('./model/player');
@@ -15,17 +15,8 @@ class Main {
 
       this.player = new Player(this.map.spawn);
 
-      this.command = new Command();
-      this.command.addSubscriber(['end', 'quit', 'q'], () => {
-        return false;
-      });
-      this.command.addSubscriber('start', () => {
-        console.log('start');
-      });
-      this.command.addSubscriber('start', () => {
-        console.log('start2');
-      });
-      this.command.start();
+      command.addSubscriber(['end', 'quit', 'q'], () => { return false; });
+      command.start();
     })
   }
   onErr(err) {

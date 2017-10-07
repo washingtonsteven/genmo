@@ -1,7 +1,5 @@
 const fs = require('fs');
 const command = require('./command');
-
-const Map = require('./model/map');
 const Player = require('./model/player');
 
 class Main {
@@ -11,9 +9,8 @@ class Main {
 
       this.world_data = JSON.parse(data);
 
-      this.map = new Map(this.world_data);
-
-      this.player = new Player(this.map.spawn);
+      this.player = new Player();
+      this.player.initMap(this.world_data);
 
       command.addSubscriber(['end', 'quit', 'q'], () => { return false; });
       command.start();

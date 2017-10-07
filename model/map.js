@@ -22,7 +22,8 @@ class Map {
   createTile(id, world_data) {
     if (world_data.map_tiles && world_data.map_tiles[id]) {
       const tile_data = world_data.map_tiles[id];
-      return new MapTile(tile_data);
+      const mapTile = new MapTile(tile_data);
+      return mapTile;
     }
     return null;
   }
@@ -32,7 +33,6 @@ class Map {
         return map[x][y];
       }
     }
-
     return null;
   }
   get spawn() {
@@ -51,6 +51,46 @@ class Map {
     }
     str += "]";
     return str;
+  }
+  getNeighbors(tile) {
+    if (tile.neighbors) {
+      return tile.neighbors;
+    }
+
+    if (tile.coords) {
+      return this.getNeighborsForTile(tile.coords.x, tile.coords.y);
+    }
+    return null;
+  }
+  getNeighborsForTile(x,y) {
+    if (typeof x === "object" && x.coords) {
+      y = x.coords.y;
+      x = x.coords.x;
+    }
+
+    if (this.isInMap(x,y)) {
+      const currentTile = this.map[x][y];
+      let neighbors = [];
+      const directions = [
+        [-1,-1], [0,-1], [1,-1],
+        [-1,0 ],         [1,0 ],
+        [-1,1 ], [0,1 ], [1,1 ]
+      ];
+      directions.forEach((v) => {
+        const neighborX = x+v[0];
+        const neighborY = y+v[1];
+        if (this.isInMap(neighborX, neighborY)) {
+          neighbors.push(this.map[neighborX][neighborY]);
+        }
+      });
+      currentTile.neighbors = neighbors;
+      return neighbors;
+    }
+
+    return null;
+  }
+  isInMap(x,y) {
+    return x >= 0 && y >= 0 && y < this.map.length && x < this.map[y].length;
   }
 }
 module.exports = Map;

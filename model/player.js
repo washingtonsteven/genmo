@@ -1,16 +1,18 @@
 const command = require('../command');
-class Player {
-  constructor(name, currentTile) {
-    if (typeof name !== "string") {
-      currentTile = name;
-      name = "Player";
-    }
-    this.name = name;
-    this.currentTile = currentTile;
+const Map = require('./map');
 
-    command.addSubscriber('look', () => { this.doLook() });
+class Player {
+  constructor(name) {
+    this.name = name || "Player";
+
+    command.addSubscriber('look', () => { this.doLook(); });
     command.addSubscriber('name', (cmd, args) => { this.namePlayer(args) });
-    command.addSubscriber('talk', (cmd, args) => { this.doTalk(args) });
+    command.addSubscriber('talk', (cmd, args) => { this.doTalk(args); });
+    command.addSubscriber('move', (cmd, args) => { this.doMove(args); });
+  }
+  initMap(world_data) {
+    this.map = new Map(world_data);
+    this.currentTile = this.map.spawn;
   }
   doLook() {
     if (this.currentTile) {
@@ -49,6 +51,12 @@ class Player {
         const npc = this.currentTile.npcs[npcIndex];
         console.log(`${npc.name} says "${npc.responses.default}"`);
       }
+    }
+  }
+  doMove(args) {
+    if (!args || args.length == 0) {
+      const neighbors = this.map.getNeighbors(this.currentTile);
+      console.log(neighbors);
     }
   }
 }

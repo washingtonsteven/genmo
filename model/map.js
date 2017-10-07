@@ -69,18 +69,23 @@ class Map {
     }
 
     if (this.isInMap(x,y)) {
-      const currentTile = this.map[x][y];
-      let neighbors = [];
+      const currentTile = this.map[y][x];
+      let neighbors = {};
       const directions = [
         [-1,-1], [0,-1], [1,-1],
         [-1,0 ],         [1,0 ],
         [-1,1 ], [0,1 ], [1,1 ]
       ];
-      directions.forEach((v) => {
+      const cardinals = [
+        'nw', 'n', 'ne',
+        'w', 'e',
+        'sw', 's', 'se'
+      ]
+      directions.forEach((v, i) => {
         const neighborX = x+v[0];
         const neighborY = y+v[1];
         if (this.isInMap(neighborX, neighborY)) {
-          neighbors.push(this.map[neighborX][neighborY]);
+          neighbors[cardinals[i]] = this.map[neighborY][neighborX];
         }
       });
       currentTile.neighbors = neighbors;

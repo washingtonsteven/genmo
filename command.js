@@ -24,7 +24,7 @@ class Command {
   waitForCommand() {
     prompt.get(this.promptProperties, (err, res) => {
       if (err) { console.error(err); return; }
-      const parts = res.command.split(":");
+      const parts = res.command.split(" ");
       const cmd = parts[0];
       const args = [...parts].slice(1);
       let doContinue = true;

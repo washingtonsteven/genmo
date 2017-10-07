@@ -54,9 +54,18 @@ class Player {
     }
   }
   doMove(args) {
+    const neighbors = this.map.getNeighbors(this.currentTile);
     if (!args || args.length == 0) {
-      const neighbors = this.map.getNeighbors(this.currentTile);
-      console.log(neighbors);
+      let msg = `You can travel: ${Object.keys(neighbors).join(", ")}`;
+      console.log(msg);
+      return;
+    }
+    const direction = args[0];
+    if (neighbors[direction]) {
+      this.currentTile = neighbors[direction];
+      this.doLook();
+    } else {
+      console.log(`You can't move in that direction! (${direction})`);
     }
   }
 }

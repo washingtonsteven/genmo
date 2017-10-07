@@ -4,6 +4,7 @@ class Command {
   constructor(p = "command") {
     this.currentPrompt = p;
     this.subscriptions = {};
+    this.addSubscriber(['ls', 'list'], () => { this.listCommands(); });
   }
   addSubscriber(command, fn) {
     if (typeof command === "string") {
@@ -47,6 +48,9 @@ class Command {
         process.exit(0);
       }
     });
+  }
+  listCommands() {
+    console.log(`Available commands: ${Object.keys(this.subscriptions)}`);
   }
   get promptProperties() {
     return {

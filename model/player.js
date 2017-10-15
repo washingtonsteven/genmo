@@ -1,5 +1,6 @@
 const command = require('../command');
 const Map = require('./map');
+const output = require('../output');
 
 class Player {
   constructor(name) {
@@ -16,40 +17,40 @@ class Player {
   }
   doLook() {
     if (this.currentTile) {
-      console.log(this.currentTile.description);
+      output.msg(this.currentTile.description);
     } else {
-      console.log("You are apparently floating in a void!");
+      output.msg("You are apparently floating in a void!");
     }
   }
   namePlayer(args) {
     if (args && args.length > 0) {
       this.name = args[0];
-      console.log(`Your name is now ${this.name}`);
+      output.msg(`Your name is now ${this.name}`);
     } else {
-      console.log(`Your name is ${this.name}`);
+      output.msg(`Your name is ${this.name}`);
     }
   }
   doTalk(args) {
     if (!this.currentTile.npcs || this.currentTile.npcs.length == 0) {
-      console.log("There is no one here for you to talk to");
+      output.msg("There is no one here for you to talk to");
       return;
     }
 
     if (!args || args.length == 0) {
-      console.log('The following people are in the area: ');
+      output.msg('The following people are in the area: ');
       for (let i = 0; i < this.currentTile.npcs.length; i++) {
         const npc = this.currentTile.npcs[i];
-        console.log(`\t[${i+1}] ${npc.name}`);
+        output.msg(`\t[${i+1}] ${npc.name}`);
       }
     } else {
       let npcIndex = +args[0];
       //re: these checks - remember that npcIndex given via prompt is 1-based
       if (isNaN(npcIndex) || npcIndex < 1 || npcIndex > this.currentTile.npcs.length) {
-        console.log('Invalid NPC id');
+        output.msg('Invalid NPC id');
       } else {
         npcIndex -= 1;
         const npc = this.currentTile.npcs[npcIndex];
-        console.log(`${npc.name} says "${npc.responses.default}"`);
+        output.msg(`${npc.name} says "${npc.responses.default}"`);
       }
     }
   }
@@ -57,7 +58,7 @@ class Player {
     const neighbors = this.map.getNeighbors(this.currentTile);
     if (!args || args.length == 0) {
       let msg = `You can travel: ${Object.keys(neighbors).join(", ")}`;
-      console.log(msg);
+      output.msg(msg);
       return;
     }
     const direction = args[0];
@@ -65,7 +66,7 @@ class Player {
       this.currentTile = neighbors[direction];
       this.doLook();
     } else {
-      console.log(`You can't move in that direction! (${direction})`);
+      output.msg(`You can't move in that direction! (${direction})`);
     }
   }
 }

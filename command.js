@@ -1,4 +1,5 @@
 const prompt = require('prompt');
+const output = require('./output');
 
 class Command {
   constructor(p = "command") {
@@ -38,19 +39,19 @@ class Command {
             doContinue = result;
         }
       } else {
-        console.log(`I don't understand '${cmd}'`);
+        output.msg(`I don't understand '${cmd}'`);
       }
 
       if (doContinue !== false) {
         this.waitForCommand();
       } else {
-        console.log('Goodbye.');
+        output.msg('Goodbye.');
         process.exit(0);
       }
     });
   }
   listCommands() {
-    console.log(`Available commands: ${Object.keys(this.subscriptions)}`);
+    output.msg(`Available commands: ${Object.keys(this.subscriptions)}`);
   }
   get promptProperties() {
     return {

@@ -5,6 +5,7 @@ const Player = require('./model/player');
 
 class Main {
   constructor(opts) {
+    this.output = output;
     fs.readFile('./data/data.json', (err, data) => {
       if (err) { return this.onErr(err); }
 
@@ -14,12 +15,12 @@ class Main {
       this.player.initMap(this.world_data);
 
       command.addSubscriber(['end', 'quit', 'q'], () => { output.msg('game over'); return false; });
-      output.fn = opts.output;
+      this.output.fn = opts.output;
       if (opts.ready && typeof opts.ready === "function") opts.ready(this);
     })
   }
   setOutput(fn) {
-    output.fn = fn;
+    this.output.fn = fn;
   }
   onErr(err) {
     console.error(err);
@@ -27,6 +28,9 @@ class Main {
   }
   sendCommand(str) {
     return command.do(str);
+  }
+  addSubscriber(cmds, fn) {
+    command.addSubscriber(cmds, fn);
   }
 }
 

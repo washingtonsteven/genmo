@@ -8,6 +8,9 @@ class State {
   peek() {
     return this.stack[this.stack.length - 1]; //TODO: return copy not reference
   }
+  length() {
+    return this.stack.length;
+  }
   toString() {
     let s = "Genmo State:\n";
     this.stack.forEach((v,i) => {

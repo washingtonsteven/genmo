@@ -4,6 +4,13 @@
       {
         "type": "node",
         "request": "launch",
+        "name": "Launch Test Program",
+        "program": "${workspaceFolder}/test.js",
+        "console":"integratedTerminal"
+      },
+      {
+        "type": "node",
+        "request": "launch",
         "name": "Launch Program",
         "program": "${workspaceRoot}/index.js",
         "console":"integratedTerminal"

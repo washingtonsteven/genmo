@@ -1,4 +1,4 @@
-class State {
+class ActionHistory {
   constructor() {
     this.stack = [];
   }
@@ -6,7 +6,7 @@ class State {
     this.stack.push(obj);
   }
   peek() {
-    return this.stack[this.stack.length - 1]; //TODO: return copy not reference
+    return Object.assign({}, this.stack[this.stack.length - 1]);
   }
   length() {
     return this.stack.length;
@@ -39,4 +39,4 @@ class State {
   */
 }
 
-module.exports = new State();
+module.exports = new ActionHistory();

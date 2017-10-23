@@ -9,10 +9,21 @@ beforeEach((done) => {
   })
 });
 
+describe('Immutable History', () => {
+  it('should have immutable history', (done) => {
+    g.sendCommand('ls');
+    const h = g.history().peek();
+    h.action += "_modified";
+    assert.notEqual(h.action, g.history().peek().action);
+    done();
+  });
+});
+
 describe('ls/list', () => {
   it('should have 2 items in state', (done) => {
     g.sendCommand('ls');
-    assert.equal(g.currentState().length(), 2);
+    const expectedOutput = "Available commands: ls,list,look,name,talk,move,end,quit,q";
+    assert.equal(g.history().peek().value, expectedOutput);
     done();
   });
 });

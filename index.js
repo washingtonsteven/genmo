@@ -2,7 +2,7 @@ const fs = require('fs');
 const command = require('./command');
 const output = require('./output');
 const Player = require('./model/player');
-const State = require('./state');
+const ActionHistory = require('./actionHistory');
 
 class Main {
   constructor(opts) {
@@ -32,7 +32,7 @@ class Main {
       action:'command',
       value:str
     };
-    State.push(stateFrame);
+    ActionHistory.push(stateFrame);
     return command.do(str);
   }
   sendOutput(m, opts) {
@@ -41,11 +41,11 @@ class Main {
       value:m,
       outputOpts:opts
     }
-    State.push(stateFrame);
+    ActionHistory.push(stateFrame);
     if (this.output_fn) this.output_fn(m, opts);
   }
-  currentState() {
-    return State;
+  history() {
+    return ActionHistory;
   }
   addSubscriber(cmds, fn) {
     command.addSubscriber(cmds, fn);

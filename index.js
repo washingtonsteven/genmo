@@ -7,7 +7,7 @@ const ActionHistory = require('./actionHistory');
 class Main {
   constructor(opts) {
     output.fn = this.sendOutput;
-    fs.readFile('./data/data.json', (err, data) => {
+    fs.readFile(__dirname+'/data/data.json', (err, data) => {
       if (err) { return this.onErr(err); }
 
       this.world_data = JSON.parse(data);
@@ -17,6 +17,7 @@ class Main {
 
       command.addSubscriber(['end', 'quit', 'q'], () => { output.msg('game over'); return false; });
       this.output_fn = opts.output;
+      output.fn = this.output_fn;
       if (opts.ready && typeof opts.ready === "function") opts.ready(this);
     })
   }
@@ -43,6 +44,7 @@ class Main {
     }
     ActionHistory.push(stateFrame);
     if (this.output_fn) this.output_fn(m, opts);
+    else console.log('idk');
   }
   history() {
     return ActionHistory;

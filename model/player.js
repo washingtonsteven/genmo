@@ -37,11 +37,12 @@ class Player {
     }
 
     if (!args || args.length == 0) {
-      output.msg('The following people are in the area: ');
+      let peopleList = 'The following people are in the area: \n';
       for (let i = 0; i < this.currentTile.npcs.length; i++) {
         const npc = this.currentTile.npcs[i];
-        output.msg(`\t[${i+1}] ${npc.name}`);
+        peopleList += (`\t[${i+1}] ${npc.name}`);
       }
+      output.msg(peopleList);
     } else {
       let npcIndex = +args[0];
       //re: these checks - remember that npcIndex given via prompt is 1-based

@@ -3,6 +3,7 @@ class State {
     this.stack = [];
   }
   push(obj) {
+    obj.key = `${(new Date()).getTime()}_${this.stack.length}`;
     this.stack.push(obj);
   }
   peek() {
@@ -13,7 +14,7 @@ class State {
   }
   get(index) {
     if (index >= 0 && index < this.stack.length) {
-      return Object.assign({}, this.stack[this.stack.length - 1]);
+      return Object.assign({}, this.stack[index]);
     }
     return null;
   }

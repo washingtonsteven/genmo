@@ -7,19 +7,13 @@ const State = require('./state');
 class Main {
   constructor(opts) {
     output.fn = this.sendOutput;
-    if (!opts.dataFile) opts.dataFile = './data/data.json';
-    fs.readFile(opts.dataFile, (err, data) => {
-      if (err) { return this.onErr(err); }
+    this.world_data = opts.world_data;
 
-      this.world_data = JSON.parse(data);
+    this.player = new Player();
+    this.player.initMap(this.world_data);
 
-      this.player = new Player();
-      this.player.initMap(this.world_data);
-
-      command.addSubscriber(['end', 'quit', 'q'], () => { output.msg('game over'); return false; });
-      this.output_fn = opts.output;
-      if (opts.ready && typeof opts.ready === "function") opts.ready(this);
-    })
+    command.addSubscriber(['end', 'quit', 'q'], () => { output.msg('game over'); return false; });
+    this.output_fn = opts.output;
   }
   setOutput(fn) {
     this.output_fn = fn;

@@ -30,7 +30,7 @@ class Map {
   getTile(x, y) {
     if (x < this.map.length && x >= 0) {
       if (y < this.map[x].length && y >= 0) {
-        return map[x][y];
+        return this.map[x][y];
       }
     }
     return null;

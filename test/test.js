@@ -1,11 +1,13 @@
+const fs = require('fs');
+const path = require('path');
 const Genmo = require('../index');
-const prompt = require('prompt');
 const assert = require('chai').assert;
 let g;
 
 beforeEach((done) => {
-  g = new Genmo({
-    ready:() => { done(); }
+  fs.readFile(path.resolve(__dirname, '../data/data.json'), (err, data) => {
+    if (err) { assert.fail('Setup incorrect: '+err); done(); return; }
+    g = new Genmo({ world_data:JSON.parse(data) }); done();
   })
 });
 

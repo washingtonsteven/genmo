@@ -6,10 +6,16 @@ class State {
     this.stack.push(obj);
   }
   peek() {
-    return this.stack[this.stack.length - 1]; //TODO: return copy not reference
+    return this.get(this.stack.length - 1) //TODO: return copy not reference
   }
   length() {
     return this.stack.length;
+  }
+  get(index) {
+    if (index >= 0 && index < this.stack.length) {
+      return Object.assign({}, this.stack[this.stack.length - 1]);
+    }
+    return null;
   }
   toString() {
     let s = "Genmo State:\n";

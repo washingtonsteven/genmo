@@ -18,3 +18,13 @@ describe('ls/list', () => {
     done();
   });
 });
+
+describe('state', () => {
+  it('should be immutable', (done) => {
+    g.sendCommand('ls');
+    const localState = g.currentState().peek();
+    localState.newProp = 'newValue';
+    assert.notProperty(g.currentState().peek(), 'newProp', 'newProps exists! Oh no.');
+    done();
+  });
+})

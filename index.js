@@ -7,7 +7,8 @@ const State = require('./state');
 class Main {
   constructor(opts) {
     output.fn = this.sendOutput;
-    fs.readFile('./data/data.json', (err, data) => {
+    if (!opts.dataFile) opts.dataFile = './data/data.json';
+    fs.readFile(opts.dataFile, (err, data) => {
       if (err) { return this.onErr(err); }
 
       this.world_data = JSON.parse(data);

@@ -15,8 +15,8 @@ class State {
     let s = "Genmo State:\n";
     this.stack.forEach((v,i) => {
       s += `\t[${i}]:\n
-              \t\taction:\"${v.action}\",\n
-              \t\tvalue:\"${v.value}\",\n
+              \t\taction:"${v.action}",\n
+              \t\tvalue:"${v.value}",\n
               \t\topts:${v.opts || 'none'}\n`;
     });
     s += "Genmo State complete";

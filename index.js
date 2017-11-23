@@ -1,4 +1,3 @@
-const fs = require('fs');
 const command = require('./command');
 const output = require('./output');
 const Player = require('./model/player');

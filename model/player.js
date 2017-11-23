@@ -31,12 +31,12 @@ class Player {
     }
   }
   doTalk(args) {
-    if (!this.currentTile.npcs || this.currentTile.npcs.length == 0) {
+    if (!this.currentTile.npcs || this.currentTile.npcs.length === 0) {
       output.msg("There is no one here for you to talk to");
       return;
     }
 
-    if (!args || args.length == 0) {
+    if (!args || args.length === 0) {
       output.msg('The following people are in the area: ');
       for (let i = 0; i < this.currentTile.npcs.length; i++) {
         const npc = this.currentTile.npcs[i];
@@ -56,7 +56,7 @@ class Player {
   }
   doMove(args) {
     const neighbors = this.map.getNeighbors(this.currentTile);
-    if (!args || args.length == 0) {
+    if (!args || args.length === 0) {
       let msg = `You can travel: ${Object.keys(neighbors).join(", ")}`;
       output.msg(msg);
       return;

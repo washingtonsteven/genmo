@@ -5,7 +5,7 @@ const State = require('./state');
 
 class Main {
   constructor(opts) {
-    output.fn = this.sendOutput;
+    output.fn = this.sendOutput.bind(this);
     this.world_data = opts.world_data;
 
     this.player = new Player();

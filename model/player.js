@@ -15,9 +15,9 @@ class Player {
     this.map = new Map(world_data);
     this.currentTile = this.map.spawn;
   }
-  doLook() {
+  doLook(opts) {
     if (this.currentTile) {
-      output.msg(this.currentTile.description);
+      output.msg(this.currentTile.description, opts);
     } else {
       output.msg("You are apparently floating in a void!");
     }
@@ -37,11 +37,23 @@ class Player {
     }
 
     if (!args || args.length === 0) {
-      output.msg('The following people are in the area: ');
-      for (let i = 0; i < this.currentTile.npcs.length; i++) {
-        const npc = this.currentTile.npcs[i];
-        output.msg(`\t[${i+1}] ${npc.name}`);
+      // output.msg('The following people are in the area: ');
+      // for (let i = 0; i < this.currentTile.npcs.length; i++) {
+      //   const npc = this.currentTile.npcs[i];
+      //   output.msg(`\t[${i+1}] ${npc.name}`);
+      // }
+      const npcMessage = {
+        msg:'The following people are in the area:\n',
+        data:[],
+        command:'talk'
       }
+
+      for(let i = 0; i < this.currentTile.npcs.length; i++) {
+        npcMessage.msg += `\t[${i+1}] ${this.currentTile.npcs[i].name}\n`
+        npcMessage.data.push({ index:(i+1), val:this.currentTile.npcs[i].name });
+      }
+
+      output.msg(npcMessage);
     } else {
       let npcIndex = +args[0];
       //re: these checks - remember that npcIndex given via prompt is 1-based
@@ -58,13 +70,21 @@ class Player {
     const neighbors = this.map.getNeighbors(this.currentTile);
     if (!args || args.length === 0) {
       let msg = `You can travel: ${Object.keys(neighbors).join(", ")}`;
-      output.msg(msg);
+      const dirData = {
+        msg,
+        data:[],
+        command:'move'
+      }
+      for(let i = 0; i < Object.keys(neighbors).length; i++) {
+        dirData.data.push({ index:i, val:Object.keys(neighbors)[i] });
+      }
+      output.msg(dirData);
       return;
     }
     const direction = args[0];
     if (neighbors[direction]) {
       this.currentTile = neighbors[direction];
-      this.doLook();
+      this.doLook({justMoved:true});
     } else {
       output.msg(`You can't move in that direction! (${direction})`);
     }

@@ -2,9 +2,9 @@ class Output {
   constructor(fn) {
     this.fn = fn;
   }
-  msg(m) {
-    console.log(m);
-    this.doCallback(m);
+  msg(m, opts) {
+    // console.log(m);
+    this.doCallback(m, opts);
   }
   error(m) {
     console.error(m);

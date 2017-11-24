@@ -14,7 +14,8 @@ class Map {
       newMap[i] = []
       for(let j = 0; j < world_data.map[i].length; j++) {
         newMap[i][j] = this.createTile(world_data.map[i][j], world_data);
-        newMap[i][j].coords = { x:j, y:i };
+        if (newMap[i][j])
+          newMap[i][j].coords = { x:j, y:i };
       }
     }
     return newMap;
@@ -84,7 +85,7 @@ class Map {
       directions.forEach((v, i) => {
         const neighborX = x+v[0];
         const neighborY = y+v[1];
-        if (this.isInMap(neighborX, neighborY)) {
+        if (this.isInMap(neighborX, neighborY) && this.map[neighborY][neighborX]) {
           neighbors[cardinals[i]] = this.map[neighborY][neighborX];
         }
       });
